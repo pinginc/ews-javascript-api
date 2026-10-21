@@ -8,11 +8,11 @@ import {StringHelper, DOMParser, xml2JsObject} from "../ExtensionMethods";
 export class EwsXmlReader {
     private static ReadWriteBufferSize: number = 4096;
 
-    get HasAttributes(): boolean { return this.currentNode ? this.currentNode.hasAttributes() : false; }
+    get HasAttributes(): boolean { return this.currentNode ? (<Element>this.currentNode).hasAttributes() : false; }
     get IsEmptyElement(): boolean { return this.currentNode.nodeType == Node.ELEMENT_NODE /*System.Xml.XmlNodeType.Element*/ && !this.currentNode.hasChildNodes(); }
-    get LocalName(): string { return this.currentNode ? this.currentNode.localName : undefined; }
+    get LocalName(): string { return this.currentNode ? (<Element>this.currentNode).localName : undefined; }
     get NamespacePrefix(): string { return this.currentNode ? (<any>this.currentNode).prefix : undefined; }
-    get NamespaceUri(): string { return this.currentNode ? this.currentNode.namespaceURI : undefined; }
+    get NamespaceUri(): string { return this.currentNode ? (<Element>this.currentNode).namespaceURI : undefined; }
     get NodeType(): number /*Xml.XmlNodeType*/ { return this.currentNode ? this.currentNode.nodeType : undefined; }
     //get PrevNodeType(): System.Xml.XmlNodeType { return this.prevNodeType; }
     get IsRoot(): boolean { return this.currentNode == this.treeWalker.root; }
@@ -74,13 +74,13 @@ export class EwsXmlReader {
     }
     HasRecursiveParent(localName: string, node: Node = this.currentNode): boolean {
         if (node === null || node.parentNode === null) return false;
-        if (node.parentNode.localName == localName) return true;
+        if ((<Element>node.parentNode).localName == localName) return true;
         else
             return this.HasRecursiveParent(localName, node.parentNode);
     }
     HasRecursiveParentNode(parentNode: Node, parentName: string, node: Node = this.currentNode): boolean {
         if (node === null || node.parentNode === null) return false;
-        if (node.parentNode.localName == parentName && node.parentNode != parentNode) return false;
+        if ((<Element>node.parentNode).localName == parentName && node.parentNode != parentNode) return false;
 
         if (node.parentNode == parentNode) return true;
         else
@@ -112,7 +112,7 @@ export class EwsXmlReader {
     //ReadAttributeValue(attributeName: string): string;// { throw new Error("EwsXmlReader.ts - ReadAttributeValue : Not implemented."); }
     //ReadAttributeValue(attributeName: string): any { throw new Error("EwsXmlReader.ts - ReadAttributeValue : Not implemented."); }
     ReadAttributeValue(xmlNamespace: XmlNamespace, attributeName: string): string {
-        if (this.currentNode == null || this.currentNode.nodeType != this.currentNode.ELEMENT_NODE || !this.currentNode.hasAttributes()) return null;
+        if (this.currentNode == null || this.currentNode.nodeType != this.currentNode.ELEMENT_NODE || !(<Element>this.currentNode).hasAttributes()) return null;
         var elem = <Element>this.currentNode;
 
         var val = elem.getAttributeNS(EwsUtilities.GetNamespaceUri(xmlNamespace), attributeName);
@@ -164,7 +164,7 @@ export class EwsXmlReader {
         do {
             this.Read();
         }
-        while (this.HasRecursiveParentNode(parentNode, parentNode.localName));
+        while (this.HasRecursiveParentNode(parentNode, (<Element>parentNode).localName));
         this.SeekLast();
     }
     SkipElement(xmlNamespace: XmlNamespace, localName: string): any { throw new Error("EwsXmlReader.ts - SkipElement : Not implemented."); }

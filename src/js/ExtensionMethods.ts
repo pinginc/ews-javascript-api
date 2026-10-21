@@ -306,11 +306,11 @@ export class xml2JsObject {
         const TEXT_STR: string = "__text";
         switch (xmlNode.nodeType) {
             case 1 /*Node.ELEMENT_NODE*/:
-                if ((<Element>xmlNode).prefix && xmlNode.localName !== xmlNode.nodeName)
+                if ((<Element>xmlNode).prefix && (<Element>xmlNode).localName !== xmlNode.nodeName)
                     obj[PREFIX_STR] = (<Element>xmlNode).prefix;
 
-                if (this.typeIncludedNS.indexOf(xmlNode.namespaceURI) >= 0) {
-                    obj[TYPE_STR] = xmlNode.localName;
+                if (this.typeIncludedNS.indexOf((<Element>xmlNode).namespaceURI) >= 0) {
+                    obj[TYPE_STR] = (<Element>xmlNode).localName;
                 }
                 var nonGenericAttributeCount = 0;
                 for (var i = 0; i < xmlNode["attributes"].length; i++) {
@@ -326,7 +326,7 @@ export class xml2JsObject {
                         else
                             obj[attr.name] = attr.value;
                     else if (attr.localName === 'xmlns') {
-                        if (xmlNode.namespaceURI !== attr.value && typeof obj[TYPE_STR] === <any>'undefiend') {
+                        if ((<Element>xmlNode).namespaceURI !== attr.value && typeof obj[TYPE_STR] === <any>'undefiend') {
                             obj[TYPE_STR] = attr.value;
                         }
                         nonGenericAttributeCount--;
@@ -344,7 +344,7 @@ export class xml2JsObject {
                                 return xmlNode.firstChild.nodeValue.trim();
                             }
                             else {
-                                obj[xmlNode.localName] = xmlNode.firstChild.nodeValue.trim();
+                                obj[(<Element>xmlNode).localName] = xmlNode.firstChild.nodeValue.trim();
                                 return obj;
                             }
                         }
@@ -373,7 +373,7 @@ export class xml2JsObject {
             if (!skip) {
                 for (var i = 0; i < xmlNode.childNodes.length; i++) {
                     var node: Node = xmlNode.childNodes.item(i);
-                    var localName = node.localName || TEXT_STR;
+                    var localName = (<Element>node).localName || TEXT_STR;
                     if (localName === TEXT_STR && node.nodeValue.trim() === "") continue;
                     var nodeObj = this.parseXMLNode(node, soapMode, xmlnsRoot);
                     if (obj[localName])
