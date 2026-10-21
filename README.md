@@ -1,3 +1,7 @@
+# @timebyping/ews-javascript-api
+
+Fork of [gautamsi/ews-javascript-api](https://github.com/gautamsi/ews-javascript-api), which has not released since 0.15.3. Install with `npm install @timebyping/ews-javascript-api`.
+
 ews-javascript-api 
 ==================
 ## Exchange Web Service in JavaScript/TypeScript.
@@ -52,8 +56,8 @@ You can now use this in Ionic, Cordova, Browser based process (where CORS is dis
 * updated `@ewsjs/xhr` version to `3.1.0` (dependency audit update)
 
 ```ts
-import { ExchangeService, OAuthCredentials, ExchangeVersion } from "ews-javascript-api";
-import { EwsOAuthHelper } from "ews-javascript-api/lib/EwsOAuthHelper";
+import { ExchangeService, OAuthCredentials, ExchangeVersion } from "@timebyping/ews-javascript-api";
+import { EwsOAuthHelper } from "@timebyping/ews-javascript-api/lib/EwsOAuthHelper";
 
 const oAuthHelper = new EwsOAuthHelper({ clientId: '', clientSecret: '', tenantId: '' });
 const token = await oAuthHelper.getAppAccessToken();
@@ -141,22 +145,22 @@ keep track of what is coming in [backlog](https://github.com/gautamsi/ews-javasc
 # Getting Started
 ## install
 ```shell
-[sudo] npm install ews-javascript-api
+npm install @timebyping/ews-javascript-api
 ``` 
 
 ## use
 ```javascript
 //classic Javascript style
-var ews = require('ews-javascript-api');
+var ews = require('@timebyping/ews-javascript-api');
 var exch = new ews.ExchangeService(ews.ExchangeVersion.Exchange2013);
 //ES6 TypeScript style
-import {ExchangeService, AutodiscoverService, Folder, Item, ExchangeVersion} from "ews-javascript-api";
+import {ExchangeService, AutodiscoverService, Folder, Item, ExchangeVersion} from "@timebyping/ews-javascript-api";
 var exch = new ExchangeService(ExchangeVersion.Exchange2013);
 ```
 ## Autodiscover user settings (** Working again as of 0.10 **)
 ```javascript
 //import ews module
-var ews = require('ews-javascript-api');
+var ews = require('@timebyping/ews-javascript-api');
 //create AutodiscoverService object
 var autod = new ews.AutodiscoverService(new ews.Uri("https://autodiscover-s.outlook.com/autodiscover/autodiscover.svc"), ews.ExchangeVersion.Exchange2010);
 //you can omit url and it will autodiscover the url, version helps throw error on client side for unsupported operations.example - //var autod = new ews.AutodiscoverService(ews.ExchangeVersion.Exchange2010);
@@ -203,7 +207,7 @@ autod.GetUserSettings(["email1@domain.com", "email2@domain.com"], settings)
 ## Example EWS operations
 Example of user availability
 ```javascript
-var ews = require('ews-javascript-api');
+var ews = require('@timebyping/ews-javascript-api');
 //create ExchangeService object
 var exch = new ews.ExchangeService(ews.ExchangeVersion.Exchange2013);
 exch.Credentials = new ews.WebCredentials("userName", "password");
