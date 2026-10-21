@@ -2,19 +2,18 @@
 # yarn lockfile v1
 
 
-"@azure/msal-common@14.16.1":
-  version "14.16.1"
-  resolved "https://registry.yarnpkg.com/@azure/msal-common/-/msal-common-14.16.1.tgz#d23ecce40823a4d03ad74160dc819d62e0c0a787"
-  integrity sha512-nyxsA6NA4SVKh5YyRpbSXiMr7oQbwark7JU9LMeg6tJYTSPyAGkdx61wPT4gyxZfxlSxMMEyAsWaubBlNyIa1w==
+"@azure/msal-common@16.14.3":
+  version "16.14.3"
+  resolved "https://registry.yarnpkg.com/@azure/msal-common/-/msal-common-16.14.3.tgz#dbf1a58a8635ca5900d8f89b20a7e032f59e3f61"
+  integrity sha512-tz3GvMrR9V/plb2lDdW8qaO8CPpfZevdExBKjltzzbAtyhK0eB2UIvji1aU+gkyHj3fxQ2ie+LNHyMXdmo8wOg==
 
-"@azure/msal-node@^2.9.2":
-  version "2.16.3"
-  resolved "https://registry.yarnpkg.com/@azure/msal-node/-/msal-node-2.16.3.tgz#8b805152ad780b048d6c2b33b1d4e26d7b463368"
-  integrity sha512-CO+SE4weOsfJf+C5LM8argzvotrXw252/ZU6SM2Tz63fEblhH1uuVaaO4ISYFuN4Q6BhTo7I3qIdi8ydUQCqhw==
+"@azure/msal-node@^7.1.1":
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/@azure/msal-node/-/msal-node-7.1.1.tgz#fe0ee4e69e2361fdb89b9003a7e233d9ef4aa783"
+  integrity sha512-zHXTJB38XVrsNaXrPBCMqEUjeyQysFfgmKtUHRDsEKTRjNIPckJ/w6fE5wBXrmJXBim1D3C7O7LOag0msPTrgw==
   dependencies:
-    "@azure/msal-common" "14.16.1"
+    "@azure/msal-common" "16.14.3"
     jsonwebtoken "^9.0.0"
-    uuid "^8.3.0"
 
 "@ewsjs/ntlm-client@^3.0.1":
   version "3.0.1"
@@ -1045,11 +1044,6 @@ url-parse@^1.5.3:
   dependencies:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
-
-uuid@^8.3.0:
-  version "8.3.2"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
-  integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
 
 vscode-oniguruma@^1.7.0:
   version "1.7.0"
