@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import { EwsLogging } from "./Core/EwsLogging";
 import { StringHelper } from "./ExtensionMethods";
 
@@ -44,7 +43,7 @@ export class Guid {
 	}
 
 	static NewGuid(): Guid {
-		return new Guid(uuidv4());
+		return new Guid(crypto.randomUUID());
 	}
 	static Parse(str: string): Guid {
 		return new Guid(str);
