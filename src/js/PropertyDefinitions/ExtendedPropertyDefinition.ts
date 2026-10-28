@@ -5,11 +5,10 @@ import { ExchangeVersion } from "../Enumerations/ExchangeVersion";
 import { Guid } from "../Guid";
 import { MapiPropertyType } from "../Enumerations/MapiPropertyType";
 import { PropertyDefinitionBase } from "./PropertyDefinitionBase";
-import { StringHelper, Convert } from "../ExtensionMethods";
+import { StringHelper, Convert, isNullOrUndefined } from "../ExtensionMethods";
 import { Strings } from "../Strings";
 import { XmlAttributeNames } from "../Core/XmlAttributeNames";
 import { XmlElementNames } from "../Core/XmlElementNames";
-import { isNullOrUndefined } from "util";
 
 /**
  * Represents the definition of an extended property.

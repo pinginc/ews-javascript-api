@@ -20,6 +20,8 @@ obj
 node_modules
 bower_components
 build
+/js
+/lib
 .tmp
 .ntvs*
 typings-dev
@@ -33,7 +35,6 @@ report
 # mongo db
 ###################
 #Don't commit Mongo Database files
-*.lock
 *.0
 *.1
 *.ns

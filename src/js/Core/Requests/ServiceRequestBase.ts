@@ -311,8 +311,17 @@ export abstract class ServiceRequestBase {
                 //    }
                 //}
                 //todo: fix tracing and other operations here
-                var reader = new EwsServiceXmlReader(webException.responseText, this.Service);
-                soapFaultDetails = this.ReadSoapFault(reader.JsObject);
+                // A 500 body is not necessarily a SOAP fault: an intermediate proxy or
+                // IIS can answer with an HTML error page, or with nothing at all. Leave
+                // soapFaultDetails null so the generic handling below takes over.
+                try {
+                    var reader = new EwsServiceXmlReader(webException.responseText, this.Service);
+                    soapFaultDetails = this.ReadSoapFault(reader.JsObject);
+                }
+                catch (parseError) {
+                    EwsLogging.DebugLog(parseError);
+                    soapFaultDetails = null;
+                }
 
                 if (soapFaultDetails != null) {
                     //todo: implement soap fault error throw
@@ -353,7 +362,7 @@ export abstract class ServiceRequestBase {
                     //    throw new ServiceResponseException(new ServiceResponse(soapFaultDetails));
                 }
             }
-            else {
+            if (soapFaultDetails == null) {
                 const msDiagMessage = webException.getResponseHeader?.('x-ms-diagnostics') || '';
                 soapFaultDetails = new SoapFaultDetails(webException && (<any>webException).message ? (<any>webException).message : msDiagMessage);
                 soapFaultDetails.HttpStatusCode = webException.status;
@@ -361,6 +370,11 @@ export abstract class ServiceRequestBase {
                     soapFaultDetails.stack = (<any>webException).stack;
 
                 this.Service.ProcessHttpErrorResponse(webException, soapFaultDetails);
+
+                // Last resort, so a body-less error response still says something.
+                if (StringHelper.IsNullOrEmpty(soapFaultDetails.message)) {
+                    soapFaultDetails.message = webException.statusText || '';
+                }
             }
 
             return soapFaultDetails;

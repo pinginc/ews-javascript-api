@@ -1,0 +1,40 @@
+version: 2.1
+orbs:
+  common: timebyping/common@3
+jobs:
+  build:
+    docker:
+      - image: cimg/node:lts
+    steps:
+      - checkout
+      - run: yarn install --frozen-lockfile
+      - run: yarn build
+      - run: yarn test
+workflows:
+  developer-branch:
+    when:
+      not:
+        equal:
+          - << pipeline.git.branch >>
+          - main
+    jobs:
+      - common/pr-lint:
+          context:
+            - GITHUB
+            - LINEAR_APP
+      - build
+  main-branch:
+    when:
+      equal:
+        - << pipeline.git.branch >>
+        - main
+    jobs:
+      - build
+      - common/semantic-release:
+          name: semantic release
+          requires:
+            - build
+          context:
+            - GITHUB
+            - NPM
+          npm: true
